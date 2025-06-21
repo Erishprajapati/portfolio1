@@ -1,12 +1,12 @@
 'use client'
 
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls, Text, Float, Html, useTexture, Stars, Sphere } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { OrbitControls, Text, Float, Html, Stars } from '@react-three/drei'
 import { useRef, useState, useEffect } from 'react'
 import * as THREE from 'three'
 
 // Typing Code Animation Component
-function TypingCode({ position, code, language }: { position: [number, number, number], code: string, language: string }) {
+function TypingCode({ position, code }: { position: [number, number, number], code: string }) {
   const [displayedCode, setDisplayedCode] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
   const meshRef = useRef<THREE.Mesh>(null)
@@ -22,11 +22,11 @@ function TypingCode({ position, code, language }: { position: [number, number, n
     }
   }, [currentIndex, code])
 
-  useFrame((state) => {
+  useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.005
       if (hovered) {
-        meshRef.current.position.y += Math.sin(state.clock.elapsedTime * 3) * 0.01
+        meshRef.current.position.y += Math.sin(Date.now() * 0.003) * 0.01
       }
     }
   })
@@ -49,7 +49,6 @@ function TypingCode({ position, code, language }: { position: [number, number, n
         />
         <Html center>
           <div className="bg-slate-800 text-green-400 p-4 rounded text-sm font-mono max-w-md">
-            <div className="text-purple-400 mb-2">// {language}</div>
             <div className="whitespace-pre-wrap">{displayedCode}</div>
             <div className="inline-block w-2 h-4 bg-green-400 animate-pulse"></div>
           </div>
@@ -65,11 +64,11 @@ function SkillOrb({ position, skill, color, size = 1 }: { position: [number, num
   const [hovered, setHovered] = useState(false)
   const [clicked, setClicked] = useState(false)
 
-  useFrame((state) => {
+  useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.01
       meshRef.current.rotation.x += 0.005
-      meshRef.current.position.y += Math.sin(state.clock.elapsedTime * 0.8) * 0.01
+      meshRef.current.position.y += Math.sin(Date.now() * 0.0008) * 0.01
       
       if (hovered) {
         meshRef.current.scale.setScalar(1.3)
@@ -111,7 +110,6 @@ function SkillOrb({ position, skill, color, size = 1 }: { position: [number, num
 // Animated Code Particles
 function CodeParticles({ count = 200 }: { count?: number }) {
   const meshRef = useRef<THREE.InstancedMesh>(null)
-  const { size, viewport } = useThree()
 
   useEffect(() => {
     if (meshRef.current) {
@@ -129,7 +127,7 @@ function CodeParticles({ count = 200 }: { count?: number }) {
     }
   }, [count])
 
-  useFrame((state) => {
+  useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.001
       meshRef.current.rotation.x += 0.0005
@@ -149,11 +147,11 @@ function DatabaseStructure() {
   const groupRef = useRef<THREE.Group>(null)
   const [hovered, setHovered] = useState(false)
 
-  useFrame((state) => {
+  useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y += 0.005
       if (hovered) {
-        groupRef.current.position.y += Math.sin(state.clock.elapsedTime * 2) * 0.02
+        groupRef.current.position.y += Math.sin(Date.now() * 0.002) * 0.02
       }
     }
   })
@@ -243,7 +241,7 @@ function APIEndpoints() {
 function DeveloperProfile() {
   const groupRef = useRef<THREE.Group>(null)
 
-  useFrame((state) => {
+  useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y += 0.002
     }
@@ -351,17 +349,14 @@ async def get_users(db: Session = Depends(get_db)):
         <TypingCode 
           position={[-6, 2, 0]} 
           code={pythonCode} 
-          language="Python" 
         />
         <TypingCode 
           position={[6, 2, 0]} 
           code={sqlCode} 
-          language="SQL" 
         />
         <TypingCode 
           position={[0, 4, 0]} 
           code={fastAPICode} 
-          language="FastAPI" 
         />
 
         {/* Skill Orbs */}

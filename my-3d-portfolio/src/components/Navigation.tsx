@@ -7,7 +7,6 @@ export default function Navigation() {
 const [isScrolled, setIsScrolled] = useState(false)
 const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 const [isDarkMode, setIsDarkMode] = useState(false)
-const [isDragging, setIsDragging] = useState(false)
 
 useEffect(() => {
 const handleScroll = () => {
@@ -58,12 +57,6 @@ isScrolled
 initial={{ y: -100 }}
 animate={{ y: 0 }}
 transition={{ duration: 0.8, ease: "easeOut" }}
-drag="x"
-dragConstraints={{ left: -100, right: 100 }}
-dragElastic={0.1}
-onDragStart={() => setIsDragging(true)}
-onDragEnd={() => setIsDragging(false)}
-whileDrag={{ scale: 0.98 }}
 >
 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div className="flex justify-between items-center h-16">
