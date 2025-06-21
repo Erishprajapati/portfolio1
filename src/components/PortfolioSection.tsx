@@ -1,26 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 export default function PortfolioSection() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  useEffect(() => {
-    // Check if dark mode is enabled
-    const checkDarkMode = () => {
-      setIsDarkMode(document.documentElement.classList.contains('dark'))
-    }
-    
-    checkDarkMode()
-    
-    // Listen for changes
-    const observer = new MutationObserver(checkDarkMode)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
-    
-    return () => observer.disconnect()
-  }, [])
 
   const projects = [
     {
